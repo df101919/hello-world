@@ -1,0 +1,30 @@
+这是spinner的用法，里面下拉列表的填充，有 数组填充  xml填充  两种方式
+
+1.数组填充
+        private static final String[] strArray={"A型","B型","O型","AB型","其他"};
+        private Spinner spinner;
+        private ArrayAdapter<String> adapter;
+        
+        spinner = (Spinner) findViewById(R.id.spinner1);
+        //以下三句连用==================================
+        adapter = new ArrayAdapter<String>(
+                this,android.R.layout.simple_spinner_item,strArray);
+                //问题：ArrayAdapter的用法是什么？参数还有什么填法？
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //设置下拉风格
+        //问题：为什么ArrayAdapter还能使用setDropDownViewResource函数？？
+        spinner.setAdapter(adapter);
+        //==============================================
+        spinner.setOnItemSelectedListener(new SpinnerSelectedListener());
+        //这里需注意，做法是自定义SpinnerSelectedListener，然后等会再实现这个类（内部类形式）
+        //还有一种做法，是直接用OnItemSelectedListener，但是这样好像会，
+        //令this类不得不继承某个接口，觉得比较麻烦，所以不用那种做法
+        
+        //以下实现SpinnerSelectedListener
+        class SpinnerSelectedListener implements AdapterView.OnItemSelectedListener {
+            public void onItemSelected(
+                    AdapterView<?> arg0, View arg1, int arg2,long arg3) {
+                view.setText("你的血型是："+/*m[arg2]*/ adapter2.getItem(arg2));
+                //这句话暂且不管意义，只是展现arg2的用法
+            }
+        }
