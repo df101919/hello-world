@@ -1,0 +1,84 @@
+//在xml里搞一个listview元素，然后！
+//需要  item.xml  adapter  class
+//listview的自己的xml布局，设计的是它的item的布局，不是整个list的布局！
+//每个item布局，之所以做成布局，一般是因为较复杂-》包含较多元素-》需要显示的数据较多。
+//所以，class定义了item的数据格式-》也就是每个item有哪几种数据。所以，List<class>存放了item的实际数据。
+//那么adapter的作用呢？便是把List<class>的数据放进xml的item里面！
+//adapter的传入参数是调用activity，item.xml，List<class>。可知，它里面应该有个循环，用来填数据。
+
+//你所需要做的工作：
+//搞父界面搞一个listview元素，再新建一个item.xml搞item元素。
+//搞个List<XXX>存放每项的实际数据，若每项有好几个数据，那就新建一个class来存放！
+//新建class怎么搞？做一个构造函数用以输入，做若干get函数用以输出。
+//adapter怎么搞？只需要填写把一个 实际数据 放入 item 中即可，循环它会自动做，你看不见。
+//adapter需要重写的函数的函数：getView()
+//getView()：三个输入：int View ViewGroup 返回值：View
+//int代表List下标，后两个不明。
+
+//这里的adapter，继承自ArrayAdapter
+
+//main的xml下
+<ListView
+            android:id="@+id/listView1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF"/>
+            
+//list_item的xml下
+<LinearLayout
+    android:id="@+id/list_item"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>
+
+//MainActivity下
+DrawerLayout drawerLayout;//类成员*  顺带做在DrawerLayout里面
+
+        drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);  //Oncreate()内,做个按钮调用
+        Button btn4 = (Button)findViewById(R.id.btn4);
+        btn4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+        
+        apiAdapter adapter = new apiAdapter(    //OnCreate()内，常见使用方法
+                MainActivity.this, R.layout.list_item, apiAdapter.str);
+        ListView listView = (ListView)findViewById(R.id.listView1);
+        listView.setAdapter(adapter);
+        
+//Adapter下
+public class apiAdapter extends ArrayAdapter {
+    public static ArrayList str =new ArrayList();//*
+
+    public apiAdapter(Context context, int ResID, List<String> data_str){
+        super(context,ResID,data_str);
+        str.add("A");
+        str.add("B");
+        str.add("C");
+    }
+    @Override
+    public View getView(int pos, View view, ViewGroup viewGroup){
+        String str_temp = (String)getItem(pos);//*
+        View vw = LayoutInflater.from(getContext()).inflate(R.layout.list_item,null);
+        TextView textView = (TextView)vw.findViewById(R.id.textView1);
+        textView.setText(str_temp);
+        return vw;
+    }
+}
+
+//采坑&细节
+//（与ListView无关）那个DrawerLayout，不能定义在OnCreate()里面。
+//因为OnCreate()里面有内部类用到了它，内部类里面的元素是有要求的，具体这里不说。
+//我用ArrayList直接存储数据，没有用类。请注意Adapter下ArrayList的用法。
+//ArrayList是static的，注意静态数据的操作。
+//注意getItem()如何用，它获取数据的过程没让你看见的。
+//LayoutInflater的那句用法，请记住。
+
+
