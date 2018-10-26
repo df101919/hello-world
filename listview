@@ -80,5 +80,7 @@ public class apiAdapter extends ArrayAdapter {
 //ArrayList是static的，注意静态数据的操作。
 //注意getItem()如何用，它获取数据的过程没让你看见的。
 //LayoutInflater的那句用法，请记住。
-
+//R.layout.list_item在MainActivity和Adapter里都需要传入参数，
+//其实在Adapter里面，apiAdapter已经收到此参数，在getView里面，可以直接把apiAdapter获得的传进去。
+//R.layout.list_item注意，这个list_item需要在xml的最外层包裹的id定义上。
 
