@@ -11,7 +11,7 @@
 //搞个List<XXX>存放每项的实际数据，若每项有好几个数据，那就新建一个class来存放！
 //新建class怎么搞？做一个构造函数用以输入，做若干get函数用以输出。
 //adapter怎么搞？只需要填写把一个 实际数据 放入 item 中即可，循环它会自动做，你看不见。
-//adapter需要重写的函数的函数：getView()
+//※※※---adapter需要重写的函数的函数：getView()
 //getView()：三个输入：int View ViewGroup 返回值：View
 //int代表List下标，后两个不明。
 
