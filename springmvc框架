@@ -1,0 +1,7 @@
+//DispatherServlet前端控制器
+//Handler处理器===controller
+//HandlerMapping处理器映射器，与前端控制器交互，找到对应的Handler，返回HandlerExecutionChain
+//HandlerExecutionChain执行链,包括 多个 HandlerInterceptor,以及Handler 
+//HandlerAdapter处理器适配器，执行Handler,Handler返回一个modelandview
+//View resolver视图解析器，Controller调用它，它返回view
+//DispatherServlet 还能渲染视图
